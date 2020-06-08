@@ -16,5 +16,8 @@
     "url": "https://github.com/nguyenbaky/internet-banking/issues"
   },
   "homepage": "https://github.com/nguyenbaky/internet-banking#readme",
-  "dependencies": {}
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "crypto-js": "^4.0.0"
+  }
 }
