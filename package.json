@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend-local": "cd frontend && npm start",
+    "backend-local": "ENV=development node backend/src/app.js",
+    "start": "concurrently \"npm run backend-local\" \"npm run frontend-local\""
   },
   "repository": {
     "type": "git",
@@ -18,6 +21,34 @@
   "homepage": "https://github.com/nguyenbaky/internet-banking#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "crypto-js": "^4.0.0"
+    "antd": "^4.2.5",
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "cors": "^2.8.5",
+    "crypto-js": "^4.0.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "express-validator": "^6.5.0",
+    "history": "^4.10.1",
+    "http-errors": "^1.7.3",
+    "http-status-codes": "^1.4.0",
+    "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
+    "morgan": "^1.10.0",
+    "mysql2": "^2.1.0",
+    "node-sass": "^4.14.1",
+    "openpgp": "^4.10.4",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-hot-loader": "^4.12.21",
+    "react-redux": "^7.2.0",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^3.4.1",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "sequelize": "^5.21.9",
+    "store": "^2.0.12",
+    "uuid": "^8.1.0"
   }
 }
