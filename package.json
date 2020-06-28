@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "frontend-local": "cd frontend && npm start",
-    "backend-local": "ENV=development node backend/src/app.js",
+    "backend-local": "node backend/src/app.js",
     "start": "concurrently \"npm run backend-local\" \"npm run frontend-local\""
   },
   "repository": {
