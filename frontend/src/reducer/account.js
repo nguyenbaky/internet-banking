@@ -1,4 +1,4 @@
-import {accountConstants} from "../contstant/account";
+import {accountConstants} from "../constant/account";
 
 export const account = (state = {}, action) => {
     switch (action.type) {
