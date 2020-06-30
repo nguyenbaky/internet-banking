@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken')
 const httpSttCode = require('http-status-codes')
-const config = require('../..config')
+const config = require('../../config')
 const userService = require('../service/user')
 
 const auth = roles => (req, res, next) => {
