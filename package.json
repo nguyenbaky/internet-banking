@@ -20,10 +20,10 @@
   },
   "homepage": "https://github.com/nguyenbaky/internet-banking#readme",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
     "antd": "^4.2.5",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "crypto-js": "^4.0.0",
     "express": "^4.17.1",
@@ -49,7 +49,7 @@
     "redux-thunk": "^2.3.0",
     "sequelize": "^5.21.9",
     "store": "^2.0.12",
-    "uuid": "^8.1.0"
+    "uuid": "^7.0.3"
   },
   "devDependencies": {
     "concurrently": "^5.2.0"
