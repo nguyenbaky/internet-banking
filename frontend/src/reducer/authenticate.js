@@ -1,5 +1,5 @@
 import store from 'store'
-import {userConstants} from "../contstant/user";
+import {userConstants} from "../constant/user";
 
 const getUser = _ => {
     try {
