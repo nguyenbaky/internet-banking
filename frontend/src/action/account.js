@@ -1,7 +1,7 @@
   
 import {message} from "antd";
 import {accountService} from '../service/account'
-import {accountConstants} from "../contstant/account";
+import {accountConstants} from "../constant/account";
 
 const getAccounts = _ => {
     const request = _ => {
