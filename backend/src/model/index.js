@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const config = require('@be-root/config')
+const config = require('../../config')
 
 const sequelize = new Sequelize.Sequelize(config.DATABASE.URL, {
     define: {
