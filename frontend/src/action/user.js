@@ -1,5 +1,5 @@
 import {message} from "antd";
-import {userConstants} from "../contstant/user";
+import {userConstants} from "../constant/user";
 import {userService} from "../service/user";
 import history from '../util/history/index'
 
