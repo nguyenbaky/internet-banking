@@ -4,7 +4,7 @@ const httpSttCode = require('http-status-codes')
 const createError = require('http-errors')
 const crypto = require('../utils/crypto')
 const generator = require('../utils/generator')
-const {v4: uuidv4} = require('uuid');
+const uuidv4  = require('uuid/v4');
 
 
 module.exports = {
