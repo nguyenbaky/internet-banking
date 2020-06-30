@@ -1,6 +1,6 @@
 require('module-alias/register')
 const openpgp = require('openpgp')
-const config = require('@be-root/config')
+const config = require('../../config')
 
 const pgp = {
     generatePGPKey: async data => {
