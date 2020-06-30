@@ -6,8 +6,8 @@ const config = {
     },
     
     DATABASE: {
-        URL: 'mysql://root:root@localhost:3306/bank'
+        URL: 'mysql://root@localhost:3306/bank'
     }
 
 }
-export default config
+module.exports = config
