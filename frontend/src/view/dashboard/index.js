@@ -38,7 +38,7 @@ const Dashboard = props => {
         <Layout
             style={{
                 height: '100vh',
-                background: 'rgba(255, 255, 255, 0.2)',
+                background: 'rgba(255, 255, 255, 1)',
             }}>
             <Sider
                 breakpoint='lg'
@@ -84,14 +84,6 @@ const Dashboard = props => {
                 </Menu>
             </Sider>
             <Layout>
-                <Header
-                    className='text-center'
-                    style={{
-                        color: '#fff',
-                        fontSize: 20,
-                        fontFamily: 'Bungee Shade',
-                    }}>
-                </Header>
                 <Content
                     style={{
                         margin: '24px 16px 0',
