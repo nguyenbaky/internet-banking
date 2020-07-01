@@ -1,5 +1,4 @@
 import {userConstants} from "../constant/user";
-import { Json } from "sequelize/types/lib/utils";
 
 const getUser = _ => {
     try {
