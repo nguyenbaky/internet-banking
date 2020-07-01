@@ -44,9 +44,9 @@ const MoveMoney = props => {
             <Item name='bankCode'
                   label='Mã ngân hàng'>
                 <Select>
-                    <Option value="1">Option 1</Option>
-                    <Option value="2">Option 2</Option>
-                    <Option value="3">Option 3</Option>
+                    <Option value="1">Bank 1</Option>
+                    <Option value="2">Bank 2</Option>
+                    <Option value="3">Bank 3</Option>
                 </Select>
             </Item>
             <Item name='accountNumber'
