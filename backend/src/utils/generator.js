@@ -1,41 +1,32 @@
-require('module-alias/register')
-const openpgp = require('openpgp')
+const jwt = require('jsonwebtoken')
 const config = require('../../config')
 
-const pgp = {
-    generatePGPKey: async data => {
-        const {privateKeyArmored, publicKeyArmored} = await openpgp.generateKey({
-            userIds: data,
-            rsaBits: 4096,
-            passphrase: config.PGP_SECRET_KEY
-        })
 
-        return {
-            privateKeyArmored: privateKeyArmored,
-            publicKeyArmored: publicKeyArmored
+module.exports = {
+    uid: _ => {
+        const length = 8;
+        const timestamp = +new Date;
+
+        let _getRandomInt = function (min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
+
+        let ts = timestamp.toString();
+        let parts = ts.split("").reverse();
+        var id = "";
+
+        for (let i = 0; i < length; ++i) {
+            let index = _getRandomInt(0, parts.length - 1);
+            id += parts[index];
+        }
+
+        return id;
     },
 
-    encryptPGP: async (data, publicKey) => {
-        const dataStr = JSON.stringify(data)
-
-        const encrypted = await openpgp.encrypt({
-            message: openpgp.message.fromText(dataStr),
-            publicKeys: (await openpgp.key.readArmored(publicKey)).keys,
+    jwtToken: userID => {
+        const payload = {userID}
+        return jwt.sign(payload, config.JWT.SECRET_KEY, {
+            expiresIn: config.JWT.EXPIRATION_TIME
         })
-
-        return encrypted.data
-    },
-
-    decryptPGP: async (encryptedData, privateKey) => {
-        const prKey = (await openpgp.key.readArmored([privateKey])).keys[0];
-        await prKey.decrypt(config.PGP_SECRET_KEY);
-        const decrypted = await openpgp.decrypt({
-            message: await openpgp.message.readArmored(encryptedData),
-            privateKeys: [prKey]
-        })
-        return JSON.parse(decrypted.data)
     }
 }
-
-module.exports = pgp
