@@ -1,9 +1,9 @@
-import store from 'store'
 import {userConstants} from "../constant/user";
+import { Json } from "sequelize/types/lib/utils";
 
 const getUser = _ => {
     try {
-        let user = store.get('user')
+        let user =  JSON.parse(localStorage.getItem('user')) 
         return user ? user : null
     } catch (err) {
         console.error(err)
