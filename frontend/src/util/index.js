@@ -1,7 +1,5 @@
-import store from 'store'
-
 const getToken = _ => {
-    const auth = store.get('user')
+    const auth = JSON.parse(localStorage.getItem('user')) 
     if (!auth) {
         return ''
     }
