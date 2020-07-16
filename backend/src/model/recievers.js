@@ -1,4 +1,5 @@
 const {DataTypes} = require('sequelize');
+const sequelize = require('./index')
 
 const Receiver = sequelize.define('receivers', {
     user_id: {

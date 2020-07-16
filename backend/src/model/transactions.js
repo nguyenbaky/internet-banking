@@ -25,14 +25,15 @@ const Transaction = sequelize.define('transactions', {
         type: DataTypes.STRING(255),
         allowNull: false
     },
-    sender_name: {
-        type: DataTypes.STRING(255),
-        allowNull: true
-    },
     sender_bank_code: {
         type: DataTypes.STRING(255),
         allowNull: false,
         defaultValue: 'YSB'
+    },
+    amount: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        defaultValue: '0'
     },
     message: {
         type: DataTypes.STRING(255),
