@@ -3,7 +3,7 @@ const createError = require('http-errors')
 const httpSttCode = require('http-status-codes')
 const UserModel = require('../model/users')
 const TransactionModel = require('../model/transactions')
-const config = require('@be-root/config')
+const config = require('../../config')
 const recieverService = require('./reciever')
 const utils = require('./utils')
 
