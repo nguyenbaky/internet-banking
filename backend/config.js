@@ -7,7 +7,9 @@ const config = {
     
     DATABASE: {
         URL: 'mysql://root@localhost:3306/bank'
-    }
+    },
+
+    MOVE_MONEY_FEE: 3
 
 }
 module.exports = config
