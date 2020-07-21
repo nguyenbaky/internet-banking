@@ -4,7 +4,7 @@ const RecieverModel = require('../model/recievers')
 const utilsService = require('./utils')
 
 module.exports = {
-    getFriends: async userID => {
+    getRecievers: async userID => {
         const recievers = await RecieverModel.findAll({
             where: {
                 user_id: userID,
@@ -25,10 +25,10 @@ module.exports = {
         }))
     },
 
-    createFriend: async (userID, friendAccountNumber, name, bankCode) => {
+    createReciever: async (userID, recieverAccountNumber, name, bankCode) => {
         if (bankCode === 'BANK') {
             await utilsService.getUserByCondition({
-                account_number: friendAccountNumber,
+                account_number: recieverAccountNumber,
                 bank_code: bankCode,
             }, 'Người dùng không tồn tại trên hệ thống')
         }
@@ -36,7 +36,7 @@ module.exports = {
         await RecieverModel.findOne({
             where: {
                 user_id: userID,
-                reciever_account_number: friendAccountNumber,
+                reciever_account_number: recieverAccountNumber,
             }
         }).then(f => {
             if (f !== null) {
@@ -45,7 +45,7 @@ module.exports = {
 
             RecieverModel.create({
                 user_id: userID,
-                reciever_account_number: friendAccountNumber,
+                reciever_account_number: recieverAccountNumber,
                 reciever_name: name,
                 bank_code: bankCode,
             })
@@ -54,10 +54,10 @@ module.exports = {
         })
     },
 
-    deleteFriend: async (userID, friendAccountNumber) => {
+    deleteReciever: async (userID, recieverAccountNumber) => {
         await RecieverModel.destroy({
             where: {
-                friend_account_number: friendAccountNumber,
+                reciever_account_number: recieverAccountNumber,
                 user_id: userID,
             }
         }).catch(err => {

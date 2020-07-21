@@ -98,9 +98,29 @@ const updateSavingAccount = (savingAccountID, name, deltaBalance) => {
     }
 }
 
+
+const getAccountInfo = accountNumber => {
+    return dispatch => {
+        accountService.getAccountInfo(accountNumber)
+            .then(res => {
+                const {data} = res
+                dispatch({
+                    type: accountConstants.GET_ACCOUNT_INFO_SUCCESS,
+                    data
+                })
+            })
+            .catch(_ => {
+                dispatch({
+                    type: accountConstants.GET_ACCOUNT_INFO_FAILURE,
+                })
+            })
+    }
+}
+
 export const accountAction = {
     getAccounts,
     createSavingAccount,
     updateSavingAccount,
     delSavingAccount,
+    getAccountInfo
 }
