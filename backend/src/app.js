@@ -10,7 +10,7 @@ app.use(morgan('dev'))
 app.use(express.json())
 app.use(cors())
 
-app.use('/api/v1', require('./api/index'))
+app.use('/api', require('./api/index'))
 
 // exception handler
 app.use((req, res) => {
