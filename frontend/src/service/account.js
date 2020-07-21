@@ -32,9 +32,17 @@ const updateSavingAccount = (savingAccountID, name, deltaBalance) => {
         .catch(service.handleResponse)
 }
 
+const getAccountInfo = accountNumber => {
+    const url = `/account/${accountNumber}/info`
+    return axios.get(url, service.bearerHeader())
+        .then(service.handleResponse)
+        .catch(service.handleResponse)
+}
+
 export const accountService = {
     getAccount,
     createSavingAccount,
     delSavingAccount,
     updateSavingAccount,
+    getAccountInfo
 }
