@@ -12,6 +12,6 @@ router.use('/user', require('./user'))
 router.use('/account', customerMiddleware, require('./account'))
 router.use('/associate-bank', require('./associate_bank'))
 router.use('/reciever',customerMiddleware,require('./reciever'))
-router.use('./transaction',customerMiddleware,require('./transaction'))
+router.use('/transaction',customerMiddleware,require('./transaction'))
 
 module.exports = router
