@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
 
 router.delete(`/:${accountNumberParam}`, async (req, res) => {
     const accountNumber = req.params[accountNumberParam]
-    await friendService.deleteFriend(req.userID, accountNumber)
+    await recieverService.deleteReciever(req.userID, accountNumber)
 
     res.status(httpSttCode.OK)
         .json({
