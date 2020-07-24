@@ -2,11 +2,10 @@ import React from 'react'
 import {Button, Tabs} from "antd"
 import {SendOutlined, SaveOutlined} from '@ant-design/icons'
 import MoveMoney from "./movemoney";
+import ReciverList from "./recieverlist"
+import * as constants from "./const"
 
 const {TabPane} = Tabs
-const MOVE_MONEY = 'MOVE_MONEY'
-const MOVE_MONEY_LIST = 'MOVE_MONEY_LIST'
-
 const Service = props => {
 
     return (
@@ -15,12 +14,13 @@ const Service = props => {
                   margin: '10px'
               }}>
             <TabPane tab={<span>Chuyển khoản <SendOutlined/></span>}
-                     key={MOVE_MONEY}>
+                     key={constants.MOVE_MONEY}>
                 <MoveMoney/>
             </TabPane>
             <TabPane tab={<span>Danh sách gợi nhớ <SaveOutlined/></span>}
-                     key={MOVE_MONEY_LIST}/>
-
+                     key={constants.MOVE_MONEY_LIST}>
+                <ReciverList/>
+            </TabPane>
         </Tabs>
     )
 }

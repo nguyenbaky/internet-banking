@@ -1,0 +1,2 @@
+export const MOVE_MONEY = 'MOVE_MONEY'
+export const MOVE_MONEY_LIST = 'MOVE_MONEY_LIST'
