@@ -23,7 +23,7 @@ router.post('/register', validator.postRegister(), async (req, res) => {
         })
 })
 
-router.post('/change-password',validate.postChangePassword(),async(req,res) => {
+router.post('/change-password',validator.postChangePassword(),async(req,res) => {
     const err = validationResult(req)
     if (!err.isEmpty()) {
         throw createError(httpSttCode.BAD_REQUEST, err.array()[0].msg)
