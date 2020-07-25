@@ -1,6 +1,6 @@
 import {message} from "antd";
 import {recieverService} from "../service/reciever";
-import {recieverConstants} from "../contstant/reciever";
+import {recieverConstants} from '../constant/reciever';
 
 const getReciever = _ => dispatch => {
     recieverService.getReciever()
