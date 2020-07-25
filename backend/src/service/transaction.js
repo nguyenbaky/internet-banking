@@ -17,7 +17,7 @@ const minSenderBalance = (recipientCharge, amount) => {
     return amount + moveMoneyFee(amount)
 }
 
-const moveMoneyYSBBank = async (transaction, sender, recipient, recipientCharge) => {
+const moveMoneyBank = async (transaction, sender, recipient, recipientCharge) => {
     if (sender.balance < minSenderBalance()) {
         throw createError(httpSttCode.NOT_ACCEPTABLE, "Số dư không đủ")
     }
@@ -31,7 +31,7 @@ const moveMoneyYSBBank = async (transaction, sender, recipient, recipientCharge)
         const newBalance = recipient.balance + (recipientCharge ?
             transaction.amount - moveMoneyFee(transaction.amount) :
             transaction.amount)
-        console.log(newBalance, recipient.balance, transaction.amount, "hihi")
+        console.log(newBalance, recipient.balance, transaction.amount, "")
         return UserModel.update({
             balance: newBalance
         }, {
@@ -46,8 +46,8 @@ const moveMoneyYSBBank = async (transaction, sender, recipient, recipientCharge)
 const moveMoney = async (transaction, sender, recipient, recipientCharge) => {
 
     switch (transaction.receiver_bank_code) {
-        case 'YSB':
-            await moveMoneyYSBBank(transaction, sender, recipient, recipientCharge)
+        case 'BANK':
+            await moveMoneyBank(transaction, sender, recipient, recipientCharge)
     }
 }
 
