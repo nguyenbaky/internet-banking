@@ -23,16 +23,6 @@ router.post('/register', validator.postRegister(), async (req, res) => {
         })
 })
 
-router.post('/change-password',validator.postChangePassword(),async(req,res) => {
-    const err = validationResult(req)
-    if (!err.isEmpty()) {
-        throw createError(httpSttCode.BAD_REQUEST, err.array()[0].msg)
-    }
-    await userService.changePassword(req.body)
-    .then(err => {
-        if(err) res.status.httpSttCode.BAD_REQUEST(err)
-        else req.status(httpSttCode.OK)('change password success')
-    })
-})
+
 
 module.exports = router

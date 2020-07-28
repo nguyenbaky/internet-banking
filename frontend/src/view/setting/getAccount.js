@@ -1,10 +1,9 @@
-import {Row, Card, Statistic, Col, Popover, Button, Tooltip} from "antd";
-import CreateSavingAccount from "./createsavingaccount";
-import React, {useEffect, useState} from 'react'
-import {connect} from "react-redux";
+import React ,{useEffect,useState} from 'react';
 import {accountAction} from '../../action/account'
-import {PlusOutlined} from '@ant-design/icons'
-import SavingAccount from "./savingaccount";
+import {connect} from "react-redux";
+import {Card,Row,Statistic,Col,Button,Tooltip} from 'antd'
+import SavingAccount from "../account/savingaccount";
+
 
 const style = {
     grid: {
@@ -29,23 +28,12 @@ const style = {
     }
 }
 
-const Account = props => {
-    const [createSAVisible, setCreateSAVisible] = useState(false)
-
-    const createSAOnClose = _ => {
-        setCreateSAVisible(false)
-    }
-
-    const createSAShow = _ => {
-        setCreateSAVisible(true)
-    }
-
+const GetAccount = (props) => {
     useEffect(() => {
         props.getAccounts()
     }, [])
 
     const {account} = props
-
     const savingAccountCards = (savingAccount = []) => {
 
         return <Card title='Tài khoản tiết kiệm'
@@ -54,13 +42,6 @@ const Account = props => {
             {savingAccount.map((_, index) => {
                 return <SavingAccount key={index} index={index}/>
             })}
-            <Card.Grid style={style.grid}>
-                <Tooltip title='Thêm tài khoản tiết kiệm'>
-                    <Button style={style.addBtn}
-                            onClick={createSAShow}
-                            icon={<PlusOutlined style={style.iconBtn}/>}/>
-                </Tooltip>
-            </Card.Grid>
         </Card>
     }
 
@@ -90,11 +71,13 @@ const Account = props => {
             <Col>
                 {savingAccountCards(account.saving_account)}
             </Col>
-            <CreateSavingAccount visible={createSAVisible}
-                                 onClose={createSAOnClose}/>
         </Row>
-    )
+    )        
 }
+
+
+
+
 
 const mapStateToProps = state => {
     return {
@@ -108,4 +91,5 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Account)
+export default connect(mapStateToProps, mapDispatchToProps)(GetAccount)
+

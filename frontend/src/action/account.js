@@ -117,10 +117,23 @@ const getAccountInfo = accountNumber => {
     }
 }
 
+const changePassword = (oldPassword,newPassword) => {
+    return dispatch => {
+        accountService.changePassword(oldPassword,newPassword)
+        .then(res => {
+            message.success(res.message)
+        })
+        .catch(err =>{
+            message.failure(err.message)
+        })
+    }
+}
+
 export const accountAction = {
     getAccounts,
     createSavingAccount,
     updateSavingAccount,
     delSavingAccount,
-    getAccountInfo
+    getAccountInfo,
+    changePassword
 }

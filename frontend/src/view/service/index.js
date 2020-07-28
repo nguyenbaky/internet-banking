@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button, Tabs} from "antd"
+import {Tabs} from "antd"
 import {SendOutlined, SaveOutlined} from '@ant-design/icons'
 import MoveMoney from "./movemoney";
 import ReciverList from "./recieverlist"

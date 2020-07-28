@@ -6,8 +6,7 @@ const UserRoles = require('../model/user_roles')
 const crypto = require('../utils/crypto')
 const generator = require('../utils/generator')
 const consts = require('../consts/index')
-const AccountModel = require('../model/accounts')
-const { encrypt } = require('openpgp')
+
 
 
 module.exports = {
@@ -61,21 +60,4 @@ module.exports = {
             }
         })
     },
-
-    changePassword: async (userID,oldPassword, newPassword) => {
-        await UserModel.findOne({where: {id:userID}})
-        .then(u => {
-            if (u === null) {
-                throw createError(httpSttCode.NOT_FOUND, 'user not exists')
-            }
-            if(u.password === crypto.encryptSHA3(oldPassword)){
-                UserModel.update({where: {id : userID}},{password: encrypt.encryptSHA3(newPassword)})
-            }else{
-                throw createError(httpSttCode.BAD_REQUEST,'wrong password')               
-            }
-        })
-        .catch(err => {
-            throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
-        })
-    }
 }

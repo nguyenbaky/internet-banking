@@ -5,6 +5,7 @@ const createError = require('http-errors')
 const httpSttCode = require('http-status-codes')
 const sequelize = require('../model/index')
 const utilsService = require('./utils')
+const crypto = require('../utils/crypto')
 
 module.exports = {
     getAccount: async (userID) => {
@@ -218,4 +219,25 @@ module.exports = {
             throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
         })
     },
+
+    changePassword: async (userID,oldPassword, newPassword) => {
+        await UserModel.findOne({where: {id:userID}})
+        .then(u => {
+            if (u === null) {
+                throw createError(httpSttCode.NOT_FOUND, 'user not exists')
+            }
+            if(u.password === crypto.encryptSHA3(oldPassword)){
+                UserModel.update({
+                    password: encrypt.encryptSHA3(newPassword)
+                },{
+                    where: {id : userID}
+                })
+            }else{
+                throw createError(httpSttCode.BAD_REQUEST,'wrong password')               
+            }
+        })
+        .catch(err => {
+            throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
+        })
+    }
 }

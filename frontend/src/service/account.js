@@ -1,5 +1,8 @@
 import axios from "axios";
 import service from "./index"
+import config from "../config";
+
+axios.defaults.baseURL = config.ROOT_API
 
 const getAccount = _ => {
     return axios.get('/account', service.bearerHeader())
@@ -39,10 +42,20 @@ const getAccountInfo = accountNumber => {
         .catch(service.handleResponse)
 }
 
+const changePassword = (oldPassword,newPassword) => {
+    return axios.put(`/account/change-password`,{
+        oldPassword,
+        newPassword
+    },service.bearerHeader())
+        .then(service.handleResponse)
+        .catch(service.handleResponse)
+}
+
 export const accountService = {
     getAccount,
     createSavingAccount,
     delSavingAccount,
     updateSavingAccount,
-    getAccountInfo
+    getAccountInfo,
+    changePassword
 }

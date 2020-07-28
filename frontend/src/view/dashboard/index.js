@@ -5,17 +5,21 @@ import {
     WalletOutlined,
     LogoutOutlined,
     BankOutlined,
+    SettingOutlined
 } from '@ant-design/icons'
-import Account from '../account/index'
 import {accountAction} from "../../action/account";
 import {userAction} from "../../action/user"
-import Service from "../service/index";
+import Account from '../account/index'
+import Service from "../service/index"
+import Setting from '../setting/index'
 
 const {Content, Footer, Sider, Header} = Layout;
 
 const WALLET_ITEM = 'wallet'
 const SERVICE_ITEM = 'service'
+const SETTING = 'setting'
 const LOGOUT_ITEM = 'logout'
+
 
 const Dashboard = props => {
 
@@ -28,6 +32,9 @@ const Dashboard = props => {
                 break
             case  SERVICE_ITEM:
                 setContent(<Service/>)
+                break
+            case SETTING:
+                setContent(<Setting/>)
                 break
             case LOGOUT_ITEM:
                 props.logout()
@@ -72,6 +79,13 @@ const Dashboard = props => {
                         icon={<BankOutlined/>}
                         style={{margin: 1}}>
                         Tiện ích
+                    </Menu.Item>
+                    <Menu.Divider/>
+                    <Menu.Item
+                        key={SETTING}
+                        icon={<SettingOutlined/>}
+                        style={{margin: 1}}>
+                        Setting
                     </Menu.Item>
                     <Menu.Divider/>
                     <Menu.Item
