@@ -25,6 +25,40 @@ router.post('/', async (req, res) => {
         })
 })
 
+router.get(`/:${accountNumberParam}/info`, async (req, res) => {
+    const accountNumber = req.params[accountNumberParam]
+    const accountInfo = await accountService.getAccountInfo(req.userID, accountNumber)
+    res.status(httpSttCode.OK)
+        .json({
+            message: 'Lấy thông tin tài khoản thành công',
+            data: {
+                ...accountInfo
+            }
+        })
+})
+
+router.delete('/saving/:savingAccountID', async (req, res) => {
+    const userID = req.userID
+    const savingAccountID = req.params.savingAccountID
+    await accountService.deleteSavingAccount(savingAccountID, userID)
+    res.status(httpSttCode.OK)
+        .json({
+            message: 'Xóa tài khoản tiết kiệm thành công, số tiền trong tài khoản này đã được chuyển vào tài khoản thanh toán',
+        })
+})
+
+router.put('/saving/:savingAccountID', async (req, res) => {
+    const savingAccountID = req.params.savingAccountID
+    const userID = req.userID
+    const data = req.body
+    await accountService.updateSavingAccount(data.name, data.delta_balance,
+        userID, savingAccountID)
+    res.status(httpSttCode.OK)
+        .json({
+            message: 'Cập nhật thông tin ví thành công'
+        })
+})
+
 router.put('/change-password',validator.postChangePassword(),async(req,res) => {
     const err = validationResult(req)
     if (!err.isEmpty()) {

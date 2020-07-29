@@ -41,7 +41,9 @@ const MoveMoney = props => {
     let delayTimer
 
     useEffect(() => {
+        console.log(`MoveMoney props `,props)
         props.getReciever()
+        console.log(`MoveMoney props after getReciever`,props)
     }, [])
 
     const accountNumberOnchange = value => {
@@ -85,11 +87,11 @@ const MoveMoney = props => {
         setIsValid(false)
     }
 
-    const accountNumberOption = props.reciever.map(reciever => ({
-        value: reciever.reciever_account_number,
-        label: `${reciever.reciever_account_number} - ${reciever.bank_code} - ${reciever.reciever_name}`,
-        original: reciever,
-    }))
+    // const accountNumberOption = props.reciever.map(reciever => ({
+    //     value: reciever.reciever_account_number,
+    //     label: `${reciever.reciever_account_number} - ${reciever.bank_code} - ${reciever.reciever_name}`,
+    //     original: reciever,
+    // }))
 
     const accountNumberOnSelect = (_, option) => {
         form.setFieldsValue({
@@ -124,13 +126,13 @@ const MoveMoney = props => {
                           message: 'Số tài khoản người nhận không được bỏ trống'
                       }
                   ]}>
-                <AutoComplete onChange={accountNumberOnchange}
+                {/* <AutoComplete onChange={accountNumberOnchange}
                     //onSearch={}
                               onSelect={accountNumberOnSelect}
                               options={accountNumberOption}
                               allowClear>
                     <Input/>
-                </AutoComplete>
+                </AutoComplete> */}
             </Item>
             <Item name='amount'
                   label='Số tiền'
@@ -150,7 +152,7 @@ const MoveMoney = props => {
                                   return Promise.resolve()
                               }
 
-                              return Promise.reject('Số tiền chuyển khoản phải lớn hơn 10 000₫')
+                              return Promise.reject('Số tiền chuyển khoản phải lớn hơn 10.000₫')
                           }
                       }
                   ]}>

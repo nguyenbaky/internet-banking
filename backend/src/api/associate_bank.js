@@ -6,16 +6,8 @@ const validator = require('../validator/associate_bank')
 
 const router = express.Router()
 
-const BANK_CODE = 'bankCode'
+const BANK_CODE = 'BANK'
 
-/*
-    body: { // pgp encrypt with public key
-        payload: {
-            account_number: '1234656789', // string, account number of user
-        },
-        signature: 'sdfsdfdsfsdsdfsdf' // HmacSHA512 of payload and secret_key
-    }
- */
 router.post(`/:${BANK_CODE}/account-info`, validator.pgpProtocol(), async (req, res) => {
     const bankCode = req.param(BANK_CODE)
 
