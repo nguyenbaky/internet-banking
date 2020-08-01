@@ -7,13 +7,13 @@ const getReciever = _ => dispatch => {
         .then(res => {
             const {data} = res
             dispatch({
-                type: recieverConstants.GET_reciever_SUCCESS,
+                type: recieverConstants.GET_RECIEVER_SUCCESS,
                 data
             })
         })
         .catch(_ => {
             dispatch({
-                type: recieverConstants.GET_reciever_FAILURE,
+                type: recieverConstants.GET_RECIEVER_FAILURE,
             })
         })
 }

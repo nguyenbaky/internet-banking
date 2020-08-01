@@ -6,6 +6,7 @@ const utilsService = require('../service/utils')
 const router = express.Router()
 
 router.post('/', async (req, res) => {
+    console.log(`backend post transaction ... `)
     const transaction = req.body.transaction
     const sender = await utilsService.getUserByCondition({
         id: req.userID

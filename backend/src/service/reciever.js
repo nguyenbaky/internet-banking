@@ -17,10 +17,10 @@ module.exports = {
         }).catch(err => {
             throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
         })
-
+        
         return recievers.map(r => ({
-            reciever_name: r.reciever_name,
-            reciever_account_number: r.reciever_account_number,
+            reciever_name: r.receiver_name,
+            reciever_account_number: r.receiver_account_number,
             bank_code: r.bank_code,
         }))
     },

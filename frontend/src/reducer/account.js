@@ -12,3 +12,14 @@ export const account = (state = {}, action) => {
             return state
     }
 }
+
+export const accountInfo = (state = {}, action) => {
+    switch (action.type) {
+        case accountConstants.GET_ACCOUNT_INFO_SUCCESS:
+            return {...action.data}
+        case accountConstants.GET_ACCOUNT_INFO_FAILURE:
+            return {}
+        default:
+            return state
+    }
+}

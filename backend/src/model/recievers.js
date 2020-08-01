@@ -19,7 +19,7 @@ const Receiver = sequelize.define('receivers', {
     bank_code: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        defaultValue: 'YSB'
+        defaultValue: 'BANK'
     },
     create_at: {
         type: DataTypes.DATE,

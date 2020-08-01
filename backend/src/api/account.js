@@ -25,9 +25,12 @@ router.post('/', async (req, res) => {
         })
 })
 
-router.get(`/:${accountNumberParam}/info`, async (req, res) => {
-    const accountNumber = req.params[accountNumberParam]
-    const accountInfo = await accountService.getAccountInfo(req.userID, accountNumber)
+router.get(`/:accountNumberParam/info`, async (req, res) => {
+    console.log(`accountNumber accountNumberParam: `,req.params)
+    const accountNumber = req.params.accountNumberParam
+    
+    const accountInfo = await accountService.getAccountInfo(req.userID, accountNumber).catch(err => {console.log(`accountNumberParam err: `,err)})
+    console.log(`get account info after *************************`)
     res.status(httpSttCode.OK)
         .json({
             message: 'Lấy thông tin tài khoản thành công',

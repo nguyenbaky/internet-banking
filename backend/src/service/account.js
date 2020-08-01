@@ -48,15 +48,15 @@ module.exports = {
         await RecieverModel.findOne({
             where: {
                 user_id: userID,
-                reciever_account_number: accountNumber,
+                receiver_account_number: accountNumber,
             }
         }).then(reciever => {
             if (reciever == null) {
                 return
             }
-
+            console.log(`service backend getAccountInfo reciever: `,reciever)
             result = {
-                name: reciever.reciever_name,
+                name: reciever.receiver_name,
                 bank_code: reciever.bank_code,
             }
         }).catch(err => {
@@ -74,7 +74,7 @@ module.exports = {
                 bank_code: user.bank_code,
             }
         }
-
+        console.log(`service backend getAccountInfo result: `,result)
         return result
     },
 

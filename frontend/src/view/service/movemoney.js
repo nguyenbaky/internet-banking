@@ -53,9 +53,11 @@ const MoveMoney = props => {
 
         clearTimeout(delayTimer)
         delayTimer = setTimeout(_ => {
+            console.log('MoveMoney accountNumberOnchange value: ',value)
             accountService.getAccountInfo(value)
                 .then(res => {
                     const userInfo = res.data
+                    console.log(`MoveMoney accountNumberOnchange userInfo `,userInfo)
                     form.setFieldsValue({
                         name: userInfo.name,
                     })
@@ -87,18 +89,19 @@ const MoveMoney = props => {
         setIsValid(false)
     }
 
-    // const accountNumberOption = props.reciever.map(reciever => ({
-    //     value: reciever.reciever_account_number,
-    //     label: `${reciever.reciever_account_number} - ${reciever.bank_code} - ${reciever.reciever_name}`,
-    //     original: reciever,
-    // }))
+    const accountNumberOption = typeof(props.reciever) !== 'undefined' ? props.reciever.map(reciever => ({
+        value: reciever.reciever_account_number,
+        label: `${reciever.reciever_account_number} - ${reciever.bank_code} - ${reciever.reciever_name}`,
+        original: reciever,
+    })) : ''
 
-    const accountNumberOnSelect = (_, option) => {
-        form.setFieldsValue({
-            name: option.original.reciever_name,
-            bankCode: option.original.bank_code,
-        })
-        setIsValid(true)
+    const accountNumberOnSelect = (data) => {
+        console.log(`MoveMoney accountNumberOnSelect `,data)
+        // form.setFieldsValue({
+        //     name: option.original.reciever_name,
+        //     bankCode: option.original.bank_code,
+        // })
+        // setIsValid(true)
     }
 
     return (
@@ -107,7 +110,7 @@ const MoveMoney = props => {
               onFinish={onFinish}
               {...formItemLayout}>
             <Item name='name'
-                  initialValue={props.accountInfo.name}
+                  initialValue={``}
                   label='Tên người nhận'>
                 <Input disabled/>
             </Item>
@@ -126,13 +129,13 @@ const MoveMoney = props => {
                           message: 'Số tài khoản người nhận không được bỏ trống'
                       }
                   ]}>
-                {/* <AutoComplete onChange={accountNumberOnchange}
+                <AutoComplete onChange={accountNumberOnchange}
                     //onSearch={}
                               onSelect={accountNumberOnSelect}
                               options={accountNumberOption}
                               allowClear>
                     <Input/>
-                </AutoComplete> */}
+                </AutoComplete>
             </Item>
             <Item name='amount'
                   label='Số tiền'
@@ -162,12 +165,6 @@ const MoveMoney = props => {
                              max={props.account.balance}
                              min={10000}
                              style={{width: '150px'}}/>
-            </Item>
-            <Item name='recipientCharge'
-                  valuePropName='checked'
-                  initialValue={true}
-                  label='Người nhận chịu phí'>
-                <Checkbox/>
             </Item>
             <Item name='saveRecipient'
                   valuePropName='checked'
