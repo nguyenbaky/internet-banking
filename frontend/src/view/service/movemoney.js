@@ -2,7 +2,7 @@
 import {Form,Input,AutoComplete,Select,InputNumber,Checkbox,Button} from "antd";
 import {accountService} from "../../service/account";
 import React, {useState, useEffect} from 'react'
-import {connect} from 'react-redux'
+import {connect,useSelector} from 'react-redux'
 import {transactionAction} from "../../action/transaction"
 import {recieverAction} from "../../action/reciever";
 
@@ -38,12 +38,13 @@ const inputNumberFormatter = value => `${value}₫`
 const MoveMoney = props => {
     const [form] = Form.useForm()
     const [isValid, setIsValid] = useState(false)
+    const reciever = useSelector(state => state.reciever)
     let delayTimer
 
     useEffect(() => {
         console.log(`MoveMoney props `,props)
         props.getReciever()
-        console.log(`MoveMoney props after getReciever`,props)
+        console.log(`MoveMoney props after getReciever`,reciever)
     }, [])
 
     const accountNumberOnchange = value => {
@@ -73,6 +74,7 @@ const MoveMoney = props => {
     }
 
     const onFinish = value => {
+        console.log(`onFinish `,value)
         const transaction = {
             receiver_account_number: value.accountNumber,
             receiver_bank_code: value.bankCode,
@@ -86,22 +88,23 @@ const MoveMoney = props => {
             value.saveRecipient)
 
         form.resetFields()
-        setIsValid(false)
+        setIsValid(true)
+        return
     }
 
-    const accountNumberOption = typeof(props.reciever) !== 'undefined' ? props.reciever.map(reciever => ({
+    const accountNumberOption = reciever.map(reciever => ({
         value: reciever.reciever_account_number,
         label: `${reciever.reciever_account_number} - ${reciever.bank_code} - ${reciever.reciever_name}`,
         original: reciever,
-    })) : ''
+    })) 
 
-    const accountNumberOnSelect = (data) => {
-        console.log(`MoveMoney accountNumberOnSelect `,data)
+    const accountNumberOnSelect = (value,option) => {
+        console.log(`MoveMoney accountNumberOnSelect `,value)
         // form.setFieldsValue({
-        //     name: option.original.reciever_name,
-        //     bankCode: option.original.bank_code,
+        //     name: option.current.original.reciever_name,
+        //     bankCode: option.current.original.bank_code,
         // })
-        // setIsValid(true)
+        setIsValid(true)
     }
 
     return (
@@ -130,7 +133,6 @@ const MoveMoney = props => {
                       }
                   ]}>
                 <AutoComplete onChange={accountNumberOnchange}
-                    //onSearch={}
                               onSelect={accountNumberOnSelect}
                               options={accountNumberOption}
                               allowClear>

@@ -1,4 +1,4 @@
-import {recieverConstants} from "../contstant/reciever";
+import {recieverConstants} from "../constant/reciever";
 
 export const reciever = (state = [], action) => {
     switch (action.type) {

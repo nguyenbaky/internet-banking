@@ -7,29 +7,20 @@ const config = require('../../config')
 const recieverService = require('./reciever')
 const utils = require('./utils')
 
-const moveMoneyFee = amount => config.MOVE_MONEY_FEE * amount / 100
-
-const minSenderBalance = (recipientCharge, amount) => {
-    if (recipientCharge) {
-        return amount
-    }
-
-    return amount + moveMoneyFee(amount)
-}
-
 const moveMoneyBank = async (transaction, sender, recipient, recipientCharge) => {
-    if (sender.balance < minSenderBalance()) {
+    if (sender.balance < transaction.amount) {
+        console.log(`*********** moveMoneyBank *********** `)
         throw createError(httpSttCode.NOT_ACCEPTABLE, "Số dư không đủ")
     }
 
     await sequelize.transaction(t => UserModel.update({
-        balance: sender.balance - minSenderBalance(recipientCharge, transaction.amount)
+        balance: sender.balance -  transaction.amount
     }, {
         transaction: t,
         where: {id: sender.id}
     }).then(_ => {
         const newBalance = recipient.balance + (recipientCharge ?
-            transaction.amount - moveMoneyFee(transaction.amount) :
+            transaction.amount :
             transaction.amount)
         console.log(newBalance, recipient.balance, transaction.amount, "")
         return UserModel.update({
