@@ -5,6 +5,7 @@ import service from "./index";
 axios.defaults.baseURL = config.ROOT_API
 
 const login = (username, password) => {
+    console.log(`login service `,username,password)
     return axios.post('/auth', {
         username: username,
         password: password
@@ -23,12 +24,13 @@ function logout() {
     localStorage.removeItem('user')
 }
 
-const register = user => {
+const register = (user,role) => {
     return axios.post('/user/register', {
         name: user.name,
         email: user.email,
         password: user.password,
-    })
+        role:role
+    },service.bearerHeader())
         .then(service.handleResponse)
         .catch(service.handleResponse)
 }

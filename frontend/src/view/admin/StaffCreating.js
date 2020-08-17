@@ -1,7 +1,8 @@
 import {Button, Form, Input} from "antd";
 import {userAction} from "../../action/user"
 import {connect} from 'react-redux'
-import React from 'react'
+import React,{useEffect} from 'react'
+import {staffAction} from '../../action/staff'
 
 const formItemLayout = {
     labelCol: {
@@ -30,8 +31,12 @@ const tailFormItemLayout = {
 }
 
 
-const UserCreating = props => {
+const StaffCreating = props => {
     const [form] = Form.useForm()
+
+    useEffect(() => {
+        props.getListStaff()
+    },[])
 
     const onFinish = value => {
         props.register(value)
@@ -45,11 +50,11 @@ const UserCreating = props => {
               form={form}>
             <Item name='name'
                   hasFeedback
-                  label='Tên khách hàng'
+                  label='Tên nhân viên'
                   rules={[
                       {
                           required: true,
-                          message: "Tên người dùng không được bỏ trống"
+                          message: "Tên nhân viên không được bỏ trống"
                       },
                   ]}>
                 <Input/>
@@ -119,8 +124,9 @@ const UserCreating = props => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        register: (user,role=1) => dispatch(userAction.register(user,role))
+        register: (user,role = 2) => dispatch(userAction.register(user,role=2)),
+        getListStaff: _ => dispatch(staffAction.getListStaff()),
     }
 }
 
-export default connect(null, mapDispatchToProps)(UserCreating)
+export default connect(null, mapDispatchToProps)(StaffCreating)

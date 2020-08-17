@@ -6,9 +6,10 @@ const UserRoles = require('../model/user_roles')
 const crypto = require('../utils/crypto')
 const generator = require('../utils/generator')
 const consts = require('../consts/index')
+const utils = require('./utils')
 
 module.exports = {
-    createUser: async (user, roles) => {
+    createUser: async (user) => {
         // hash password
         user.password = crypto.encryptSHA3(user.password)
         user.account_number = generator.uid()
@@ -17,15 +18,11 @@ module.exports = {
         // create user with transaction
         await sequelize.transaction(t => {
             return UserModel.create(user, {transaction: t})
-                .then(u => {
-                    let promises = []
-                    roles.forEach(role => promises.push(
-                        UserRoles.create({
-                            user_id: u.id,
-                            role_id: role.id,
-                        }, {transaction: t})
-                    ))
-                    return Promise.all(promises)
+                .then(u => {  
+                    return UserRoles.create({
+                        user_id: u.id,
+                        role_id: user.role,
+                    }, {transaction: t})
                 })
         }).catch(err => {
             throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err.toString())
@@ -35,7 +32,7 @@ module.exports = {
         return user
     },
 
-    checkRoleUser: async (userID, roles) => {
+    checkRoleUser: async (userID, role) => {
         await UserModel.findOne({where: {id: userID}})
             .then(u => {
                 if (u === null) {
@@ -51,13 +48,28 @@ module.exports = {
                 throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
             })
 
-        roles.forEach(r => {
-            const found = userRoles.find(ur => ur.role_id === r)
-            if (!found) {
-                throw createError(httpSttCode.NOT_ACCEPTABLE, "access denied")
-            }
-        })
-        // if ( userRoles.role_id !== roles) 
-        //     throw createError(httpSttCode.NOT_ACCEPTABLE, "access denied")
+        if ( userRoles.role_id >= role) 
+            throw createError(httpSttCode.NOT_ACCEPTABLE, "access denied")
     },
+
+    getListStaff: async() => {
+        const staffs = await UserRoles.findAll({where:{role_id : consts.ROLE.STAFF}})
+            .catch(err => {
+                throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
+            })
+        const staffinfo = staffs.map(s => {
+            utils.getUserByCondition({id : s.user_id},'Không tìm thấy nhân viên')
+        })
+            return staffinfo
+    } ,
+
+    deleteStaff: async(staffID) => {
+        UserModel.destroy({
+            where:{
+                id: staffID
+            }
+        }).catch(err =>{
+            throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
+        })
+    }
 }

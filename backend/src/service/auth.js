@@ -49,6 +49,8 @@ module.exports = {
             }
         })    
 
+        console.log(`auth backend service login maprole `,mapRoles)
+
         const refreshToken = uuidv4()
         await user.update({
             refresh_token: refreshToken

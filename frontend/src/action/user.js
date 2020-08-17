@@ -35,9 +35,9 @@ const login = (username, password) => {
     }
 }
 
-const register = user => {
+const register = (user,role) => {
     return dispatch => {
-        userService.register(user)
+        userService.register(user,role)
             .then(res => {
                 message.success(res.message)
             })

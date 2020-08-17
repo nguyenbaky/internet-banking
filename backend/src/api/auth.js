@@ -12,7 +12,6 @@ router.post('/', validator.postLogin(), async (req, res) => {
     if (!err.isEmpty()) {
         throw createError(httpSttCode.BAD_REQUEST, err.array()[0].msg)
     }
-
     const user = req.body
     const loginData = await authService.login(user.username, user.password)
     res.status(httpSttCode.OK)

@@ -5,8 +5,8 @@ import UserCreating from "./usercreating";
 import MoveMoney from "./movemoney";
 
 const {TabPane} = Tabs
+const CREATE_USER = 'CREATE_USER'
 const MOVE_MONEY = 'MOVE_MONEY'
-const MOVE_MONEY_LIST = 'MOVE_MONEY_LIST'
 
 const StaffService = props => {
 
@@ -16,12 +16,12 @@ const StaffService = props => {
                   margin: '10px'
               }}>
             <TabPane tab={<span>Tạo tài khoản <UserAddOutlined/></span>}
-                     key={MOVE_MONEY}>
+                     key={CREATE_USER}>
                 <UserCreating/>
             </TabPane>
             <TabPane tab={
                 <span>Nạp tiền vào tài khoản <MoneyCollectOutlined/></span>}
-                     key={MOVE_MONEY_LIST}>
+                     key={MOVE_MONEY}>
                 <MoveMoney/>
             </TabPane>
         </Tabs>

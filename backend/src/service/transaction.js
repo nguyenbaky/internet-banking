@@ -7,6 +7,7 @@ const config = require('../../config')
 const recieverService = require('./reciever')
 const utils = require('./utils')
 const { checkRoleUser } = require('./user')
+const consts = require('../consts/index')
 
 const moveMoneyBank = async (transaction, sender, recipient, recipientCharge) => {
     if (sender.balance < transaction.amount) {
@@ -78,7 +79,7 @@ module.exports = {
             account_number: transaction.staff_account_number,
         }, 'Không xác thực được thông tin nhân viên, vui lòng thử lại')
         console.log(`staff createMoney `,staff)
-        await checkRoleUser(staff.id,[2])
+        await checkRoleUser(staff.id,consts.ROLE.STAFF)
         const recipient = await utils.getUserByCondition({
             account_number: transaction.receiver_account_number
         }, 'Người nhận không tồn tại')

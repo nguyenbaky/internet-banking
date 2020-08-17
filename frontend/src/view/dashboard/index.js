@@ -6,7 +6,8 @@ import {
     LogoutOutlined,
     BankOutlined,
     SettingOutlined,
-    SolutionOutlined
+    SolutionOutlined,
+    UserOutlined
 } from '@ant-design/icons'
 import {accountAction} from "../../action/account";
 import {userAction} from "../../action/user"
@@ -14,6 +15,7 @@ import Account from '../account/index'
 import Service from "../service/index"
 import Setting from '../setting/index'
 import StaffService from "../staffService/index";
+import AdminService from '../admin/index'
 
 const {Content, Footer, Sider, Header} = Layout;
 
@@ -21,7 +23,8 @@ const WALLET_ITEM = 'wallet'
 const SERVICE_ITEM = 'service'
 const SETTING = 'setting'
 const LOGOUT_ITEM = 'logout'
-const STAFF_SERVICE_ITEM = 'staff_service_item'
+const STAFF_ITEM = 'staff_item'
+const ADMIN_ITEM = 'admin_item'
 
 const staffMenu = authentication => {
     console.log(`authentication `,authentication)
@@ -31,16 +34,37 @@ const staffMenu = authentication => {
 
     const role = authentication.user.roles
     console.log(`role `,role)
-    const exist = role.find(r => r.id === 2)
+    const exist = role.find(r => r.id >= 2)
     if (exist === undefined) {
         return null
     }
 
     return <Menu.Item
-        key={STAFF_SERVICE_ITEM}
+        key={STAFF_ITEM}
         icon={<SolutionOutlined/>}
         style={{margin: 1}}>
         Quản lý
+    </Menu.Item>
+}
+
+const adminMenu = authentication => {
+    console.log(`authentication `,authentication)
+    if (!authentication || !authentication.user || !authentication.user.roles) {
+        return null
+    }
+
+    const role = authentication.user.roles
+    console.log(`role `,role)
+    const exist = role.find(r => r.id === 3)
+    if (exist === undefined) {
+        return null
+    }
+
+    return <Menu.Item
+        key={ADMIN_ITEM}
+        icon={<UserOutlined/>}
+        style={{margin: 1}}>
+        Nhân viên
     </Menu.Item>
 }
 
@@ -59,9 +83,12 @@ const Dashboard = props => {
             case SETTING:
                 setContent(<Setting/>)
                 break
-            case STAFF_SERVICE_ITEM:
-            setContent(<StaffService/>)
-            break
+            case STAFF_ITEM:
+                setContent(<StaffService/>)
+                break
+            case ADMIN_ITEM:
+                setContent(<AdminService/>)
+                break
             case LOGOUT_ITEM:
                 props.logout()
         }
@@ -93,6 +120,7 @@ const Dashboard = props => {
                       }}>
                     <div style={{height: '63px'}}/>
                     <Menu.Divider/>
+
                     <Menu.Item
                         key={WALLET_ITEM}
                         icon={<WalletOutlined/>}
@@ -100,6 +128,7 @@ const Dashboard = props => {
                         Thông tin tài khoản
                     </Menu.Item>
                     <Menu.Divider/>
+
                     <Menu.Item
                         key={SERVICE_ITEM}
                         icon={<BankOutlined/>}
@@ -107,6 +136,7 @@ const Dashboard = props => {
                         Tiện ích
                     </Menu.Item>
                     <Menu.Divider/>
+
                     <Menu.Item
                         key={SETTING}
                         icon={<SettingOutlined/>}
@@ -114,9 +144,13 @@ const Dashboard = props => {
                         Setting
                     </Menu.Item>
                     <Menu.Divider/>
+
                     {staffMenu(props.authentication)}
                     <Menu.Divider/>
+
+                    {adminMenu(props.authentication)}
                     <Menu.Divider/>
+
                     <Menu.Item
                         key={LOGOUT_ITEM}
                         icon={<LogoutOutlined/>}

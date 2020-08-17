@@ -21,7 +21,7 @@ const decode = async (bankCode, payload, signature) => {
         throw createError(httpSttCode.UNAUTHORIZED, 'signature can not verify')
     }
 
-    return await pgp.decryptPGP(payload, associateBank.private_key)
+    return await pgp.decryptPGP(payload, associateBank.public_key)
 }
 
 module.exports = {
