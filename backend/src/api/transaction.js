@@ -1,8 +1,10 @@
+const userService = require('../service/user')
 const express = require('express')
 const transactionService = require('../service/transaction')
 const httpSttCode = require('http-status-codes')
 const utilsService = require('../service/utils')
 const { response } = require('express')
+const createError = require('http-errors')
 
 const router = express.Router()
 
@@ -27,6 +29,26 @@ router.post('/', async (req, res) => {
             res.status(e.status)
         })
     
+})
+
+router.post('/createmoney',async(req,res) => {
+    const {transaction} = req.body
+    const staff = await utilsService.getUserByCondition({
+        id: req.userID
+    }, "Người dùng không thể xác minh, vui lòng thử lại", httpSttCode.UNAUTHORIZED)
+
+    if(staff.account_number !== transaction.staff_account_number)
+        throw createError(httpSttCode.UNAUTHORIZED,"Nhân viên không thể xác minh, vui lòng thử lại")
+    await transactionService.createMoney(transaction)
+        .then(response => {
+            console.log(`******* Thêm tài khoản thành công ****** `,response)
+            res.status(httpSttCode.OK)
+            .json('Thêm tài khoản thành công')
+        })
+        .catch(e => {
+            console.log(`********** error thêm tài khoản ***** `,e)
+            res.status(e.status)
+        })
 })
 
 module.exports = router

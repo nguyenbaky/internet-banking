@@ -1,5 +1,6 @@
-  
+const RoleModel = require('../model/roles')
 const UserModel = require('../model/users')
+const UserRoleModel = require('../model/user_roles')
 const httpSttCode = require('http-status-codes')
 const createError = require('http-errors')
 const crypto = require('../utils/crypto')
@@ -23,13 +24,31 @@ module.exports = {
             })
 
         const hashPassword = crypto.encryptSHA3(password)
-        console.log(user.password, hashPassword)
+
         if (user.password !== hashPassword) {
             throw errUsernamePassword
         }
 
-        // correct username and password
-        // gen refresh token
+        const roles = await RoleModel.findAll()
+            .catch(err => {
+                throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
+            })
+
+        const userRoles = await UserRoleModel.findAll({
+            where: {
+                user_id: user.id,
+            }
+        }).catch(err => {
+            throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
+        })
+        const mapRoles = userRoles.map(role => {
+            const r = roles.find(r => r.id === role.role_id)
+            return {
+                id: r.id,
+                role: r.role,
+            }
+        })    
+
         const refreshToken = uuidv4()
         await user.update({
             refresh_token: refreshToken
@@ -41,7 +60,8 @@ module.exports = {
         const jwtToken = generator.jwtToken(user.id)
         return {
             token: jwtToken,
-            refresh_token: refreshToken
+            refresh_token: refreshToken,
+            roles: mapRoles,
         }
     },
 

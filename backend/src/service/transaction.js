@@ -6,6 +6,7 @@ const TransactionModel = require('../model/transactions')
 const config = require('../../config')
 const recieverService = require('./reciever')
 const utils = require('./utils')
+const { checkRoleUser } = require('./user')
 
 const moveMoneyBank = async (transaction, sender, recipient, recipientCharge) => {
     if (sender.balance < transaction.amount) {
@@ -35,11 +36,22 @@ const moveMoneyBank = async (transaction, sender, recipient, recipientCharge) =>
 }
 
 const moveMoney = async (transaction, sender, recipient, recipientCharge) => {
-
     switch (transaction.receiver_bank_code) {
         case 'BANK':
             await moveMoneyBank(transaction, sender, recipient, recipientCharge)
     }
+}
+
+const createMoney = async(transaction,recipient) => {
+    const newBalance = transaction.amount + recipient.balance
+    console.log(`transaction createMoney `,transaction)
+    await sequelize.transaction(t =>  UserModel.update({
+            balance: newBalance
+        }, {
+            transaction: t,
+            where: {account_number: transaction.receiver_account_number}
+        })
+    )
 }
 
 module.exports = {
@@ -53,11 +65,23 @@ module.exports = {
         }, 'Người nhận không tồn tại')
 
         if (saveRecipient) {
-            await recieverService.createFriend(sender.id,
+            await recieverService.createReciever(sender.id,
                 transaction.receiver_account_number, recipient.name,
                 recipient.bank_code)
         }
 
         await moveMoney(transaction, sender, recipient, recipientCharge)
+    },
+
+    createMoney : async (transaction) => {
+        const staff = await utils.getUserByCondition({
+            account_number: transaction.staff_account_number,
+        }, 'Không xác thực được thông tin nhân viên, vui lòng thử lại')
+        console.log(`staff createMoney `,staff)
+        await checkRoleUser(staff.id,[2])
+        const recipient = await utils.getUserByCondition({
+            account_number: transaction.receiver_account_number
+        }, 'Người nhận không tồn tại')
+        await createMoney(transaction,recipient)
     }
 }

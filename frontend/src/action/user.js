@@ -35,6 +35,18 @@ const login = (username, password) => {
     }
 }
 
+const register = user => {
+    return dispatch => {
+        userService.register(user)
+            .then(res => {
+                message.success(res.message)
+            })
+            .catch(err => {
+                message.error(err)
+            })
+    }
+}
+
 const logout = _ => {
     userService.logout()
     return {type: userConstants.LOGOUT}
@@ -42,5 +54,6 @@ const logout = _ => {
 
 export const userAction = {
     login,
-    logout
+    logout,
+    register
 }

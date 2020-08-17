@@ -23,7 +23,18 @@ function logout() {
     localStorage.removeItem('user')
 }
 
+const register = user => {
+    return axios.post('/user/register', {
+        name: user.name,
+        email: user.email,
+        password: user.password,
+    })
+        .then(service.handleResponse)
+        .catch(service.handleResponse)
+}
+
 export const userService = {
     login,
     logout,
+    register
 }

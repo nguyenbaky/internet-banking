@@ -11,6 +11,15 @@ const createTransaction = (transaction, recipientCharge, saveRecipient) => {
         .catch(service.handleResponse)
 }
 
+const createMoney   = (transaction) => {
+    return axios.post(`/transaction/createmoney`,{
+        transaction 
+    },service.bearerHeader())
+        .then(service.handleResponse)
+        .catch(service.handleResponse)
+}
+
 export const transactionService = {
     createTransaction,
+    createMoney
 }

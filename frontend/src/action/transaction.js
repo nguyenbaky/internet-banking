@@ -21,6 +21,20 @@ const createTransaction = (transaction, recipientCharge, saveRecipient) => {
     }
 }
 
+const createMoney = (transaction) => {
+    return dispatch => {
+        transactionService.createMoney(transaction)
+            .then(res => {
+                dispatch(accountAction.getAccounts())
+                message.success(res.message)
+            })
+            .catch(err => {
+                message.error(err.toString())
+            })
+    }
+}
+
 export const transactionAction = {
     createTransaction,
+    createMoney
 }

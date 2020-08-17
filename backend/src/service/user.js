@@ -7,8 +7,6 @@ const crypto = require('../utils/crypto')
 const generator = require('../utils/generator')
 const consts = require('../consts/index')
 
-
-
 module.exports = {
     createUser: async (user, roles) => {
         // hash password
@@ -59,5 +57,7 @@ module.exports = {
                 throw createError(httpSttCode.NOT_ACCEPTABLE, "access denied")
             }
         })
+        // if ( userRoles.role_id !== roles) 
+        //     throw createError(httpSttCode.NOT_ACCEPTABLE, "access denied")
     },
 }
