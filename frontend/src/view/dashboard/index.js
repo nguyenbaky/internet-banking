@@ -27,13 +27,11 @@ const STAFF_ITEM = 'staff_item'
 const ADMIN_ITEM = 'admin_item'
 
 const staffMenu = authentication => {
-    console.log(`authentication `,authentication)
     if (!authentication || !authentication.user || !authentication.user.roles) {
         return null
     }
 
     const role = authentication.user.roles
-    console.log(`role `,role)
     const exist = role.find(r => r.id >= 2)
     if (exist === undefined) {
         return null
@@ -48,13 +46,11 @@ const staffMenu = authentication => {
 }
 
 const adminMenu = authentication => {
-    console.log(`authentication `,authentication)
     if (!authentication || !authentication.user || !authentication.user.roles) {
         return null
     }
 
     const role = authentication.user.roles
-    console.log(`role `,role)
     const exist = role.find(r => r.id === 3)
     if (exist === undefined) {
         return null

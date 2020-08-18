@@ -2,6 +2,7 @@
     "scripts": {
       "start": "react-scripts start"
     },
+    "type": "module",
     "browserslist": {
       "production": [
         ">0.2%",

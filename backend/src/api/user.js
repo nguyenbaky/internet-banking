@@ -6,6 +6,7 @@ const {validationResult} = require('express-validator')
 const createError = require('http-errors')
 const consts = require('../consts/index')
 
+
 const router = express.Router()
 
 router.post('/register', validator.postRegister(), async (req, res) => {
@@ -35,7 +36,7 @@ router.get('/staff',async(req,res) => {
         })
 })
 
-router.delete('staff/:staffID',async(req,res) => {
+router.delete('/staff/:staffID',async(req,res) => {
     const id = req.userID
     await userService.checkRoleUser(id,consts.ROLE.ADMIN)
     const {staffID} = req.params
@@ -49,6 +50,24 @@ router.delete('staff/:staffID',async(req,res) => {
         .catch(err => {
             res.status(httpSttCode.INTERNAL_SERVER_ERROR)
         })
+})
+
+router.post('/email',async(req,res) => {
+    let id = req.userID
+    console.log(`******* post user/email ********`)
+    await userService.sendOTP(id)
+    res.status(httpSttCode.OK)
+})
+
+router.post('/checkOTP',async(req,res) => {
+    const id = req.userID
+    const {otp} = req.body
+    console.log(`otp ************* `,otp)
+    const result =  await userService.checkOTP(id,otp)
+    console.log(`result OTP **************** `,result)
+    res.json({
+        message:result
+    })
 })
 
 module.exports = router

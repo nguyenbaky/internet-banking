@@ -7,6 +7,16 @@ const crypto = require('../utils/crypto')
 const generator = require('../utils/generator')
 const consts = require('../consts/index')
 const utils = require('./utils')
+const nodemailer = require("nodemailer");
+const Otp = require('../model/otp')
+
+let transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: consts.USER,
+      pass: consts.PASS
+    }
+  });
 
 module.exports = {
     createUser: async (user) => {
@@ -57,8 +67,8 @@ module.exports = {
             .catch(err => {
                 throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
             })
-        const staffinfo = staffs.map(s => {
-            utils.getUserByCondition({id : s.user_id},'Không tìm thấy nhân viên')
+        const staffinfo = staffs.map(async(s) => {
+            await utils.getUserByCondition({id : s.user_id},'Không tìm thấy nhân viên')
         })
             return staffinfo
     } ,
@@ -71,5 +81,55 @@ module.exports = {
         }).catch(err =>{
             throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
         })
+    },
+
+    sendOTP: async(id) => {
+        const u = await utils.getUserByCondition({
+            id:id
+        },'Không tìm thấy user')
+        const k = generator.uid()
+        const mailOptions = {
+            from: 'tq237006@gmail.com',
+            to: u.email,
+            subject: 'Verify OTP BANK',
+            text: 'Mã xác thực của quý khách là ' + k
+        };
+        // Tạo mã OTP
+        const found = await Otp.findOne({where: {
+            email:u.email
+        }})
+
+        if (found){
+            await Otp.update({otp:k},{where :{
+                email:u.email
+            }})
+        }else{
+            console.log(`********** not found **************`)
+            otp = {}
+            otp.email=u.email
+            otp.otp = k
+            await Otp.create(otp)
+        }
+
+        transporter.sendMail(mailOptions)
+        .then(_ => {
+            console.log(`******* email sent *********`)
+        })
+        .catch(err => {
+            console.log(`************************` ,err)
+            throw createError(httpSttCode.INTERNAL_SERVER_ERROR)
+        })
+    },
+
+    checkOTP : async(id,otp) => {
+        const u = await utils.getUserByCondition({id})
+        console.log(`******email OTP `,u.email)
+        const o = await Otp.findOne({where: {email:u.email}})
+        if(!o) throw createError(httpSttCode.UNAUTHORIZED)
+
+        console.log(`*********`,o.otp == otp)
+        if(o.otp == otp) return true
+        else return false
     }
+
 }

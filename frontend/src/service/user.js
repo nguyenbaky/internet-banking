@@ -35,8 +35,23 @@ const register = (user,role) => {
         .catch(service.handleResponse)
 }
 
+const sendOTP = () => {
+    console.log(`service frontend sendotp`)
+    return axios.post('/user/email',{},service.bearerHeader())
+    .then(service.handleResponse)
+    .catch(service.handleResponse)
+}
+
+const checkOTP = (otp) => {
+    return axios.post('/user/checkOTP',{otp},service.bearerHeader())
+        .then(service.handleResponse)
+        .catch(service.handleResponse)
+}
+
 export const userService = {
     login,
     logout,
-    register
+    register,
+    sendOTP,
+    checkOTP
 }

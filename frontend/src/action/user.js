@@ -1,7 +1,7 @@
-import {message} from "antd";
 import {userConstants} from "../constant/user";
 import {userService} from "../service/user";
 import history from '../util/history/index'
+import {message} from "antd";
 
 const login = (username, password) => {
     const request = user => {
@@ -52,8 +52,33 @@ const logout = _ => {
     return {type: userConstants.LOGOUT}
 }
 
+const sendOTP = () => {
+    userService.sendOTP()
+    .then(res => console.log(`action sendOTP `,res))
+    .catch(err => {
+        message.err(err)
+    })
+}
+
+const checkOTP = async(otp) => {
+    let m = false
+    await userService.checkOTP(otp).then( res => {
+        m = res.message
+        if(res.message) {
+            message.success(res.message)
+        }
+        else message.err('Mã OTP không chính xác')
+    }).catch(err => {
+        message.error(err)
+    })
+    console.log('m ngoài ',m)
+    return m
+}
+
 export const userAction = {
     login,
     logout,
-    register
+    register,
+    sendOTP,
+    checkOTP
 }
