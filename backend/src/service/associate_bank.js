@@ -16,11 +16,6 @@ const decode = async (bankCode, payload, signature) => {
             throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
         })
 
-    const genSig = crypto.encryptSHA512(payload, associateBank.secret_key)
-    if (genSig !== signature) {
-        throw createError(httpSttCode.UNAUTHORIZED, 'signature can not verify')
-    }
-
     return await pgp.decryptPGP(payload, associateBank.public_key)
 }
 
