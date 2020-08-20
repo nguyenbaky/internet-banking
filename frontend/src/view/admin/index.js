@@ -18,11 +18,11 @@ const AdminService = props => {
                      key={CREATE_STAFF}>
                 <StaffCreating/>
             </TabPane>
-            <TabPane tab={
+            {/* <TabPane tab={
                 <span>Danh sách nhân viên<MoneyCollectOutlined/></span>}
                      key={STAFF_LIST}>
                 <ListStaff/>
-            </TabPane>
+            </TabPane> */}
         </Tabs>
     )
 }
