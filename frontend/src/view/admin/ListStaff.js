@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import {connect} from 'react-redux'
-import {Table, Button, Modal, Form} from "antd";
+import {Table, Button, Modal, Form, Input} from "antd";
 import {DeleteOutlined, EditOutlined} from '@ant-design/icons';
 import {staffAction} from '../../action/staff'
 
@@ -11,6 +11,9 @@ const formLayout = {
 
 const ListStaff = props => {
     const [visibleUpdatingModal, setVisibleUpdatingModal] = useState(false)
+    const [name,setName] = useState() 
+    const [email,setEmail] = useState() 
+    const [account_number,setAccount_number] = useState() 
 
     const columns = [
         {
@@ -30,8 +33,8 @@ const ListStaff = props => {
         },
         {
             title: 'Số tài khoản',
-            key: 'accountNumber',
-            dataIndex: 'accountNumber',
+            key: 'account_number',
+            dataIndex: 'account_number',
         },
         {
             key: 'action',
@@ -82,7 +85,9 @@ const ListStaff = props => {
                onCancel={onCloseUpdatingModal}
                visible={visibleUpdatingModal}>
             <Form id='updateRecieverForm'>
-
+               <Input placeholder="name" onChange={(e) => {setName(e.target.value)}}></Input>
+               <Input placeholder="email" onChange={(e) => {}}></Input>
+               <Input placeholder="account_number" onChange={(e) => {}}></Input>
             </Form>
         </Modal>
     </div>
