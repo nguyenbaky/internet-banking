@@ -76,9 +76,9 @@ const Dashboard = props => {
             case  SERVICE_ITEM:
                 setContent(<Service/>)
                 break
-            case SETTING:
-                setContent(<Setting/>)
-                break
+            // case SETTING:
+            //     setContent(<Setting/>)
+            //     break
             case STAFF_ITEM:
                 setContent(<StaffService/>)
                 break
@@ -133,13 +133,13 @@ const Dashboard = props => {
                     </Menu.Item>
                     <Menu.Divider/>
 
-                    <Menu.Item
+                    {/* <Menu.Item
                         key={SETTING}
                         icon={<SettingOutlined/>}
                         style={{margin: 1}}>
                         Setting
                     </Menu.Item>
-                    <Menu.Divider/>
+                    <Menu.Divider/> */}
 
                     {staffMenu(props.authentication)}
                     <Menu.Divider/>

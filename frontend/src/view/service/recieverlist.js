@@ -43,13 +43,13 @@ const RecieverList = props => {
                             props.deleteReciever(reciever.accountNumber)
                         }}
                         icon={<DeleteOutlined/>}>Xóa</Button>
-                <Button type='primary'
+                {/* <Button type='primary'
                         size='small'
                         icon={<EditOutlined/>}
                         onClick={_ => {
                             setVisibleUpdatingModal(true)
                         }}
-                        style={{margin: '5px'}}>Cập nhật</Button>
+                        style={{margin: '5px'}}>Cập nhật</Button> */}
             </div>
         }
     ]

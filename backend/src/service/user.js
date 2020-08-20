@@ -19,6 +19,14 @@ let transporter = nodemailer.createTransport({
   });
 
 module.exports = {
+    getUser : async (id)=>{
+        const u = await utils.getUserByCondition({id})
+        return {
+            account_number : u.account_number,
+            balance : u.balance
+        }
+    },
+
     createUser: async (user) => {
         // hash password
         user.password = crypto.encryptSHA3(user.password)

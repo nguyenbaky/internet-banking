@@ -36,7 +36,7 @@ module.exports = {
         await RecieverModel.findOne({
             where: {
                 user_id: userID,
-                reciever_account_number: recieverAccountNumber,
+                receiver_account_number: recieverAccountNumber,
             }
         }).then(f => {
             if (f !== null) {
@@ -45,8 +45,8 @@ module.exports = {
 
             RecieverModel.create({
                 user_id: userID,
-                reciever_account_number: recieverAccountNumber,
-                reciever_name: name,
+                receiver_account_number: recieverAccountNumber,
+                receiver_name: name,
                 bank_code: bankCode,
             })
         }).catch(err => {
@@ -57,7 +57,7 @@ module.exports = {
     deleteReciever: async (userID, recieverAccountNumber) => {
         await RecieverModel.destroy({
             where: {
-                reciever_account_number: recieverAccountNumber,
+                receiver_account_number: recieverAccountNumber,
                 user_id: userID,
             }
         }).catch(err => {

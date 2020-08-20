@@ -87,11 +87,11 @@ const Account = props => {
                     />
                 </Card>
             </Col>
-            <Col>
+            {/* <Col>
                 {savingAccountCards(account.saving_account)}
             </Col>
             <CreateSavingAccount visible={createSAVisible}
-                                 onClose={createSAOnClose}/>
+                                 onClose={createSAOnClose}/> */}
         </Row>
     )
 }

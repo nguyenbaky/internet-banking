@@ -9,6 +9,14 @@ const consts = require('../consts/index')
 
 const router = express.Router()
 
+router.get('/',async(req,res) => {
+    const id = req.userID
+    const data = await userService.getUser()
+    res.status(httpSttCode.OK).message({
+        data
+    })
+})
+
 router.post('/register', validator.postRegister(), async (req, res) => {
     const err = validationResult(req)
     if (!err.isEmpty()) {

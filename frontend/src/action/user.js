@@ -62,7 +62,8 @@ const sendOTP = () => {
 
 const checkOTP = async(otp) => {
     let m = false
-    await userService.checkOTP(otp).then( res => {
+    await userService.checkOTP(otp)
+    .then( res => {
         m = res.message
         if(res.message) {
             message.success(res.message)
@@ -71,7 +72,6 @@ const checkOTP = async(otp) => {
     }).catch(err => {
         message.error(err)
     })
-    console.log('m ngoài ',m)
     return m
 }
 

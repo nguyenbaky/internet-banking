@@ -94,7 +94,7 @@ const MoveMoney = props => {
             props.createTransaction(transaction, recipientCharge,
                 saveRecipient)
         }else{
-            alert(`Ma4 OTP không chính xác`)
+            alert(`Mã OTP không chính xác`)
         }
         setVisible(false)
         
