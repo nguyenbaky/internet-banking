@@ -12,7 +12,7 @@ router.get(`/:${BANK_CODE}/account-info`, validator.pgpProtocol(), async (req, r
     const bankCode = req.param(BANK_CODE)
 
     const accountInfo = await associateBankService.getAccountInfo(bankCode,
-        req.body.payload, req.body.signature)
+        req.body.payload)
 
     res.status(httpSttCode.OK)
         .json({
@@ -33,7 +33,7 @@ router.post(`/:${BANK_CODE}/transfer`, async (req, res) => {
     }
 
     const transferInfo = await associateBankService.transfer(bankCode,
-        req.body.payload, req.body.signature)
+        req.body.payload)
 
     res.status(httpSttCode.OK)
         .json({

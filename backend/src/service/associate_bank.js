@@ -5,7 +5,7 @@ const UserModel = require('../model/users')
 const httpSttCode = require('http-status-codes')
 const createError = require('http-errors')
 
-const decode = async (bankCode, payload, signature) => {
+const decode = async (bankCode, payload) => {
     const associateBank = await AssociateBankModel.findOne({where: {bank_code: bankCode}})
         .then(ab => {
             if (ab === null) {
@@ -20,8 +20,8 @@ const decode = async (bankCode, payload, signature) => {
 }
 
 module.exports = {
-    getAccountInfo: async (bankCode, payload, signature) => {
-        const data = await decode(bankCode, payload, signature)
+    getAccountInfo: async (bankCode, payload) => {
+        const data = await decode(bankCode, payload)
         if (!data.hasOwnProperty('account_number')) {
             throw createError(httpSttCode.BAD_REQUEST, 'account number is null')
         }
@@ -40,8 +40,8 @@ module.exports = {
         }
     },
 
-    transfer: async (bankCode, payload, signature) => {
-        const data = await decode(bankCode, payload, signature)
+    transfer: async (bankCode, payload) => {
+        const data = await decode(bankCode, payload)
         if (!data.hasOwnProperty('account_number') || !data.hasOwnProperty('value')) {
             throw createError(httpSttCode.BAD_REQUEST, 'data invalid')
         }
