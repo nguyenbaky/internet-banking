@@ -34,7 +34,7 @@ router.post('/register', validator.postRegister(), async (req, res) => {
 
 router.get('/staff',async(req,res) => {
     const id = req.userID
-    await userService.checkRoleUser(id,consts.ROLE.ADMIN)
+    await userService.checkRoleUser(id,consts.ROLE.ADMIN)  
     const staffinfo = await userService.getListStaff()
     console.log(`****************** staff info ********************* `, staffinfo)
     res.status(httpSttCode.OK)
