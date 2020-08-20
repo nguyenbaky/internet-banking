@@ -6,6 +6,7 @@ const getListStaff = _ => dispatch => {
     staffService.getListStaff()
         .then(res => {
             const {data} = res
+            console.log(data)
             dispatch({
                 type:staffConstants.GET_STAFF_SUCCESS,
                 data

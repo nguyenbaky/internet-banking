@@ -75,11 +75,10 @@ module.exports = {
             .catch(err => {
                 throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
             })
-        console.log('*********** staffs **********',staffs)
-        const staffinfo = staffs.map(async(s) => {
-            return await utils.getUserByCondition({id : s.user_id},'Không tìm thấy nhân viên')
-        })
-            return staffinfo
+        return await Promise.all(staffs.map(async(s) => {
+            const staff = await utils.getUserByCondition({id : s.user_id},'Không tìm thấy nhân viên')
+            return staff 
+        })) 
     } ,
 
     deleteStaff: async(staffID) => {

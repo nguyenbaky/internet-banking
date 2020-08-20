@@ -90,7 +90,7 @@ const ListStaff = props => {
 
 const mapStateToProps = state => {
     return {
-        reciever: state.reciever,
+        staff: state.staff,
     }
 }
 
