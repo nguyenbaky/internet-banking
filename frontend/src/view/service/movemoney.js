@@ -105,7 +105,13 @@ const MoveMoney = props => {
     }
 
     const onFinish = value => {
-        console.log(`onFinish `,value)
+        console.log(`onFinish `,value.amount)
+        console.log(`props `,props.account.balance)
+        if(value.amount > props.account.balance){
+            alert('Tài khoản không đủ')
+            return
+        }
+        
         const t = {
             receiver_account_number: value.accountNumber,
             receiver_bank_code: value.bankCode,
@@ -200,7 +206,6 @@ const MoveMoney = props => {
                     <InputNumber step={10000}
                                 parser={inputNumberParser}
                                 formatter={inputNumberFormatter}
-                                max={props.account.balance}
                                 min={10000}
                                 style={{width: '150px'}}/>
                 </Item>
