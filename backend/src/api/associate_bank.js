@@ -8,7 +8,7 @@ const router = express.Router()
 
 const BANK_CODE = 'BANK'
 
-router.post(`/:${BANK_CODE}/account-info`, validator.pgpProtocol(), async (req, res) => {
+router.get(`/:${BANK_CODE}/account-info`, validator.pgpProtocol(), async (req, res) => {
     const bankCode = req.param(BANK_CODE)
 
     const accountInfo = await associateBankService.getAccountInfo(bankCode,
