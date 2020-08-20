@@ -75,6 +75,7 @@ module.exports = {
             .catch(err => {
                 throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
             })
+        console.log('*********** staffs **********',staffs)
         const staffinfo = staffs.map(async(s) => {
             return await utils.getUserByCondition({id : s.user_id},'Không tìm thấy nhân viên')
         })
