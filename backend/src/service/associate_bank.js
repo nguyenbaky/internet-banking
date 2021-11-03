@@ -16,7 +16,7 @@ const decode = async (bankCode, payload) => {
             throw createError(httpSttCode.INTERNAL_SERVER_ERROR, err)
         })
 
-    return await pgp.decryptPGP(payload, associateBank.public_key)
+    return await pgp.verify(payload, associateBank.public_key)
 }
 
 module.exports = {
